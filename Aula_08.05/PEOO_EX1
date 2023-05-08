@@ -1,0 +1,16 @@
+class Círculo:
+    def __init__(self):
+        self.raio = 0
+
+    def calcular_área(self):
+        área = self.raio ** 2 * 3.14
+        return área
+
+    def calcular_comprimento(self):
+        comprimento = 2 * 3.14 * self.raio
+        return comprimento
+
+
+circulo = Círculo()
+circulo.raio = 10
+print(circulo.calcular_área(), circulo.calcular_comprimento())
