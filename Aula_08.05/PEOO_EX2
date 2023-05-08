@@ -1,0 +1,30 @@
+class Disciplina:
+    def __init__(self):
+        self.nome = ''
+        self.nota_1 = 0
+        self.nota_2 = 0
+        self.nota_3 = 0
+        self.nota_4 = 0
+        self.final = 0
+
+    def disciplina(self):
+        return self.nome
+
+    def média(self):
+        média_parcial = (self.nota_1 * 2 + self.nota_2 * 2 + self.nota_3 * 3 + self.nota_4 * 3) / 10
+        if média_parcial < 60:
+            média_final = (média_parcial + self.final) / 2
+        else:
+            média_final = média_parcial
+        return média_final
+
+
+media = Disciplina()
+media.nome = 'Português'
+media.nota_1 = 60
+media.nota_2 = 60
+media.nota_3 = 60
+media.nota_4 = 50
+media.final = 60
+print(media.disciplina())
+print(media.média())
