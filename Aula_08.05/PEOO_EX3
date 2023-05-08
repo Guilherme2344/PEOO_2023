@@ -1,0 +1,14 @@
+class Velocidade:
+    def __init__(self):
+        self.distância = 0
+        self.tempo = 0
+
+    def velocidade_média(self):
+        média = self.distância / self.tempo
+        return média
+    
+
+media = Velocidade()
+media.distância = 10
+media.tempo = 5
+print(media.velocidade_média())
