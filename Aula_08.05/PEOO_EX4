@@ -1,0 +1,28 @@
+class Cinema:
+    def __init__(self):
+        self.dia = ''
+        self.horário = 0
+    
+    def valor(self):
+        inteira = 0
+        meia = 0
+        if self.dia == 'quarta':
+            meia = 8
+        else:
+            if self.dia == 'segunda' or self.dia == 'terça' or self.dia == 'quinta':
+                inteira = 16
+                meia = 8
+            elif self.dia == 'sexta' or self.dia == 'sábado' or self.dia == 'domingo':
+                inteira = 20
+                meia = 10
+            if self.horário >= 17:
+                inteira += 50/100 * inteira
+                meia += 50/100 * meia
+            return f'Inteira = {inteira}', f'Meia = {meia}'
+        return meia
+
+
+cinema = Cinema()
+cinema.dia = 'sexta'
+cinema.horário = 20
+print(cinema.valor())
