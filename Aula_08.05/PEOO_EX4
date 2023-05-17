@@ -1,48 +1,75 @@
-class Cinema:
+class Disciplina:
     def __init__(self):
-        self.__dia = 'dom'
-        self.__horario = 17
+        self.__nome = ''
+        self.__nota_1 = 0
+        self.__nota_2 = 0
+        self.__nota_3 = 0
+        self.__nota_4 = 0
+        self.__nota_prova_final = 0
 
-    def set_dia(self, dia):
-        dias = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sab']
-        if dia in dias: self.__dia = dia
+    def set_nome(self, nome):
+        disciplinas = ['português', 'matemática', 'história', 'geografia', 'artes', 'química', 'biologia', 'física', 'educação física', 'filosofia']
+        if nome in disciplinas: self.__nome = nome
+        else: raise NameError()
+
+    def set_nota_1(self, nota):
+        if nota >= 0 and nota <= 100: self.__nota_1 = nota
         else: raise ValueError()
 
-    def get_dia(self):
-        return self.__dia
-
-    def set_horario(self, horario):
-        if horario >= 0 and horario <= 23: self.__horario = horario
+    def set_nota_2(self, nota):
+        if nota >= 0 and nota <= 100: self.__nota_2 = nota
         else: raise ValueError()
 
-    def get_horario(self):
-        return self.__horario
+    def set_nota_3(self, nota):
+        if nota >= 0 and nota <= 100: self.__nota_3 = nota
+        else: raise ValueError()
 
-    def inteira(self):
-        if self.__dia == 'qua': return 8
+    def set_nota_4(self, nota):
+        if nota >= 0 and nota <= 100: self.__nota_4 = nota
+        else: raise ValueError()
+
+    def set_nota_prova_final(self, nota):
+        if nota >= 0 and nota <= 100: self.__nota_prova_final = nota
+        else: raise ValueError()
+
+    def get_nome(self):
+        return self.__nome
+    
+    def get_nota_1(self):
+        return self.__nota_1
+    
+    def get_nota_2(self):
+        return self.__nota_2
+    
+    def get_nota_3(self):
+        return self.__nota_3
+    
+    def get_nota_4(self):
+        return self.__nota_4
+    
+    def get_nota_prova_final(self):
+        return self.__nota_prova_final
+    
+    def media(self):
+        media = (self.__nota_1 * 2 + self.__nota_2 * 2 + self.__nota_3 * 3 + self.__nota_4 * 3) / 10
+        if media < 60:
+            media_final = (media + self.__nota_prova_final) / 2
+            return media_final
         else:
-            valor = 20
-            custo_1 = ['seg', 'ter', 'qui']
-            if self.__dia in custo_1:
-                valor = 16
-            if self.__horario >= 17 or self.__horario == 0: 
-                valor =  1.5 * valor
-            return valor
-
-    def meia(self):
-        if self.__dia == 'qua': return 8
-        return self.inteira()/2
-
+            return media
+        
 
 class UI:
     @staticmethod
     def main():
-        y = Cinema()
-        sessão = input('Digite o dia da sessão: ')
-        hora = int(input('Digite o horário da sessão: '))
-        y.set_dia(sessão)
-        y.set_horario(hora)
-        print(f'Inteira = {y.inteira()} Meia = {y.meia()}')
+        x = Disciplina()
+        x.set_nome('português')
+        x.set_nota_1(50)
+        x.set_nota_2(70)
+        x.set_nota_3(30)
+        x.set_nota_4(10)
+        x.set_nota_prova_final(60)
+        print(f'A média final foi: {x.media()}')
 
 
 UI.main()
