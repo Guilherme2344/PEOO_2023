@@ -1,14 +1,34 @@
 class Velocidade:
     def __init__(self):
-        self.distância = 0
-        self.tempo = 0
+        self.__distancia = 0
+        self.__tempo = 0
+
+    def set_distancia(self, valor):
+        if valor >= 0: self.__distancia = valor
+        else: raise ValueError()
+        
+    def set_tempo(self, valor):
+        if valor >= 0: self.__tempo = valor
+        else: raise ValueError()
+
+    def get_distancia(self):
+        return self.__distancia
+    
+    def get_tempo(self):
+        return self.__tempo
 
     def velocidade_média(self):
-        média = self.distância / self.tempo
+        média = self.__distancia / self.__tempo
         return média
     
 
-media = Velocidade()
-media.distância = 10
-media.tempo = 5
-print(media.velocidade_média())
+class UI:
+    @staticmethod
+    def main():
+        media = Velocidade()
+        media.set_distancia(10)
+        media.set_tempo(5)
+        print(f'Velocidade média = {media.velocidade_média()}')
+
+
+UI.main()
