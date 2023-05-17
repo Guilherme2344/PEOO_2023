@@ -4,6 +4,7 @@ class Circulo:
 
     def set_raio(self, valor):
         if valor >= 0: self.__raio = valor
+        else: raise ValueError()
 
     def get_raio(self):
         return self.__raio
