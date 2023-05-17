@@ -1,16 +1,28 @@
-class Círculo:
+class Circulo:
     def __init__(self):
-        self.raio = 0
+        self.__raio = 0
+
+    def set_raio(self, valor):
+        if valor >= 0: self.__raio = valor
+
+    def get_raio(self):
+        return self.__raio
 
     def calcular_área(self):
-        área = self.raio ** 2 * 3.14
+        área = self.__raio ** 2 * 3.14
         return área
 
     def calcular_comprimento(self):
-        comprimento = 2 * 3.14 * self.raio
+        comprimento = 2 * 3.14 * self.__raio
         return comprimento
 
 
-circulo = Círculo()
-circulo.raio = 10
-print(circulo.calcular_área(), circulo.calcular_comprimento())
+class UI:
+    @staticmethod
+    def main():
+        circulo = Circulo()
+        circulo.set_raio(10)
+        print(f'Área = {circulo.calcular_área()} Comprimento = {circulo.calcular_comprimento()}')
+
+
+UI.main()
