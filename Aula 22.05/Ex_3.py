@@ -25,6 +25,14 @@ class EquacaoGrau2:
 
     def get_c(self):
         return self.__c
+    
+    def delta(self):
+        self.__delta = self.__b **2 - 4 * self.__a * self.__c
+        return f'Delta = {self.__delta}'
+    
+    def TemRaizesReais(self):
+        if self.__delta < 0: return f'Raízes Reais? {False}'
+        else: return f'Raízes Reais? {True}'
 
     def equacao(self):
         self.__delta = self.__b ** 2 - 4 * self.__a * self.__c
@@ -33,10 +41,8 @@ class EquacaoGrau2:
         return self.__x1, self.__x2
     
     def __str__(self):
-        if self.__delta < 0:
-            return f'Delta = {self.__delta}; Tem Raiz? {False}'
-        else:
-            return f'Delta = {self.__delta}; Tem Raiz? {True}; X1 = {self.__x1} e X2 = {self.__x2}'
+            if self.__delta < 0: return 'Não há raízes reais'
+            else: return f'X1 = {self.__x1} e X2 = {self.__x2}'
 
 
 class UI:
@@ -46,6 +52,8 @@ class UI:
         b = int(input('Digite o valor de b: '))
         c = int(input('Digite o valor de c: '))
         equa = EquacaoGrau2(a, b, c)
+        print(equa.delta())
+        print(equa.TemRaizesReais())
         equa.equacao()
         print(equa)
 
