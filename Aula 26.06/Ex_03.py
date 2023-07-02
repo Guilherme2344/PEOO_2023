@@ -21,8 +21,6 @@ class Estagiario:
         self.__telefone = telefone
         self.__dias = dias
         self.__turno = turno
-        self.set_dias(dias)
-        self.set_turno(turno)
 
     def set_dias(self, valor):
         if valor >= 1 and valor <= 5: self.__dias = valor
