@@ -51,7 +51,7 @@ class NCliente:
 
 class UI:
     def menu():
-        print('1 - inserir; 2 - listar; 3 - atualizar; 4 - excluir')
+        print('0 - sair; 1 - inserir; 2 - listar; 3 - atualizar; 4 - excluir')
         return int(input())
 
     def main():
