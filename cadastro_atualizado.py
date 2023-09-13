@@ -1,4 +1,98 @@
-import json, datetime, time
+import json, time
+from datetime import datetime
+
+class Cliente:
+    def __init__(self, id, nome, email, fone):
+        self.__id = id
+        self.__nome = nome
+        self.__email = email
+        self.__fone = fone
+
+    def set_id(self, id):
+        self.__id = id
+
+    def set_nome(self, nome):
+        self.__nome = nome
+
+    def set_email(self, email):
+        self.__email = email
+
+    def set_fone(self, fone):
+        self.__fone = fone
+
+    def get_id(self):
+        return self.__id
+
+    def get_nome(self):
+        return self.__nome
+
+    def get_email(self):
+        return self.__email
+
+    def get_fone(self):
+        return self.__fone
+
+    def __str__(self):
+        return f'{self.__id}; {self.__nome}; {self.__email}; {self.__fone}'
+
+    
+class NCliente:
+    __clientes = []
+
+    @classmethod
+    def inserir(cls, obj):
+        NCliente.abrir()
+        id = 0
+        for cliente in cls.__clientes:
+            if cliente.get_id() > id: id = cliente.get_id()
+        obj.set_id(id + 1)
+        cls.__clientes.append(obj)
+        NCliente.salvar()
+
+    @classmethod
+    def listar(cls):
+        NCliente.abrir()
+        return cls.__clientes
+
+    @classmethod
+    def listar_id(cls, id):
+        NCliente.abrir()
+        for cliente in cls.__clientes:
+            if cliente.get_id() == id: return cliente
+        return None
+
+    @classmethod
+    def atualizar(cls, obj):
+        NCliente.abrir()
+        cliente = cls.listar_id(obj.get_id())
+        cliente.set_nome(obj.get_nome())
+        cliente.set_email(obj.get_email())
+        cliente.set_fone(obj.get_fone())
+        NCliente.salvar()
+
+    @classmethod
+    def excluir(cls, obj):
+        NCliente.abrir()
+        cliente = cls.listar_id(obj.get_id())
+        cls.__clientes.remove(cliente)
+        NCliente.salvar()
+
+    @classmethod
+    def abrir(cls):
+        try:
+            with open('clientes.json', 'r') as arquivo:
+                a = json.load(arquivo)
+                for cliente in a:
+                    c = Cliente(cliente['_Cliente__id'], cliente['_Cliente__nome'], cliente['_Cliente__email'], cliente['_Cliente__fone'])
+                    cls.__clientes.append(c)
+        except FileNotFoundError:
+            pass
+
+    @classmethod
+    def salvar(cls):
+        with open('clientes.json', 'w') as arquivo:
+            json.dump(cls.__clientes, arquivo, default=vars)
+
 class Servico:
     def __init__(self, id, desc, valor, duracao):
         self.__id = id
@@ -93,6 +187,106 @@ class NServico:
             json.dump(cls.__servicos, arquivo, default=vars)
 
 
+class Agenda:
+    def __init__(self, id, data, confirm, idCliente, idServico):
+        self.__id = id
+        self.__data = data
+        self.__confirm = confirm
+        self.__idCliente = idCliente
+        self.__idServico = idServico
+
+    def set_id(self, id):
+        self__id = id
+
+    def set_data(self, data):
+        self.__data = data
+
+    def set_confirm(self, confirm):
+        self.__confirm = confirm
+
+    def set_idCliente(self, idCliente):
+        self.__idCliente = idCliente
+
+    def set_idServico(self, idServico):
+        self.__idServico = idServico
+
+    def get_id(self):
+        return self.__id
+
+    def get_data(self):
+        return self.__data
+
+    def get_confirm(self):
+        return self.__data
+
+    def get_idCliente(self):
+        return self.__idCliente
+
+    def get_idServico(self):
+        return self.__idServico
+
+    def __str__(self):
+        return f'{self.__id}; {self.__data}; {self.__confirm}; {self.__idCliente}; {self.__idServico}'
+
+
+class NAgenda:
+    __agendas = []
+
+    @classmethod
+    def inserir(cls, obj):
+        NAgenda.abrir()
+        id = 0
+        for agenda in cls.__agendas:
+            if agenda.get_id() > id: id = agenda.get_id()
+        obj.set_id(id + 1)
+        cls.__agendas.append(obj)
+        NAgenda.salvar()
+
+    @classmethod
+    def listar(cls):
+        NAgenda.abrir()
+        return cls.__agendas
+
+    @classmethod
+    def listar_id(cls, id):
+        NAgenda.abrir()
+        for agenda in cls.__agendas:
+            if agenda.get_id() == id: return agenda
+        return None
+
+    @classmethod
+    def atualizar(cls, obj):
+        NAgenda.abrir()
+        agenda = cls.listar_id(obj.get_id())
+        agenda.set_data(obj.get_data())
+        agenda.set_confirm(obj.get_confirm())
+        NAgenda.salvar()
+
+    @classmethod
+    def excluir(cls, obj):
+        NAgenda.abrir()
+        agenda = cls.listar_id(obj.get_id())
+        cls.__agendas.remove(agenda)
+        NAgenda.salvar()
+
+    @classmethod
+    def abrir(cls):
+        try:
+            with open('agendas.json', 'r') as arquivo:
+                a = json.load(arquivo)
+                for agenda in a:
+                    d = Agenda(agenda['_Agenda__id'], agenda['_Agenda__data'], agenda['_Agenda__confirm'], agenda['_Agenda__idCliente'], agenda['_Agenda__idServico'])
+                    cls.__agendas.append(d)
+        except FileNotFoundError:
+            pass
+
+    @classmethod
+    def salvar(cls):
+        with open('agendas.json', 'w') as arquivo:
+            json.dump(cls.__agendas, arquivo, default=vars)
+
+
+
 class UI:
     @classmethod
     def main(cls):
@@ -106,7 +300,7 @@ class UI:
 
     @classmethod
     def menu(cls):
-        print('0 - sair; 1 - inserir; 2 - listar; 3 - atualizar; 4 - excluir')
+        print('0 - sair; 1 - inserir cliente; 2 - listar cliente; 3 - atualizar cliente; 4 - excluir cliente\n5 - inserir serviço; 6 - listar serviço; 7 - atualizar serviço; 8 - excluir serviço\n9 - inserir agenda; 10 - listar agenda; 11 - atualizar agenda; 12 excluir agenda')
         return int(input())
 
     @classmethod
