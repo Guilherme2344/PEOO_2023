@@ -80,6 +80,7 @@ class NCliente:
     @classmethod
     def abrir(cls):
         try:
+            cls.__clientes = []
             with open('clientes.json', 'r') as arquivo:
                 a = json.load(arquivo)
                 for cliente in a:
@@ -196,7 +197,7 @@ class Agenda:
         self.__idServico = idServico
 
     def set_id(self, id):
-        self__id = id
+        self.__id = id
 
     def set_data(self, data):
         self.__data = data
@@ -238,6 +239,10 @@ class NAgenda:
         id = 0
         for agenda in cls.__agendas:
             if agenda.get_id() > id: id = agenda.get_id()
+        if obj[2] == 's':
+            obj[2] = 'Sim'
+        elif obj[2] == 'n':
+            obj[2] == 'Não'
         obj.set_id(id + 1)
         cls.__agendas.append(obj)
         NAgenda.salvar()
@@ -293,15 +298,52 @@ class UI:
         op = 50
         while op != 0:
             op = UI.menu()
-            if op == 1: UI.ServicoInserir()
-            if op == 2: UI.ServicoListar()
-            if op == 3: UI.ServicoAtualizar()
-            if op == 4: UI.ServicoExcluir()
+            if op == 1: UI.ClienteInserir()
+            if op == 2: UI.ClienteListar()
+            if op == 3: UI.ClienteAtualizar()
+            if op == 4: UI.ClienteExcluir()
+            if op == 5: UI.ServicoInserir()
+            if op == 6: UI.ServicoListar()
+            if op == 7: UI.ServicoAtualizar()
+            if op == 8: UI.ServicoExcluir()
+            if op == 9: UI.AgendaInserir()
+            if op == 10: UI.AgendaListar()
+            if op == 11: UI.AgendaAtualizar()
+            if op == 12: UI.AgendaExcluir()
 
     @classmethod
     def menu(cls):
         print('0 - sair; 1 - inserir cliente; 2 - listar cliente; 3 - atualizar cliente; 4 - excluir cliente\n5 - inserir serviço; 6 - listar serviço; 7 - atualizar serviço; 8 - excluir serviço\n9 - inserir agenda; 10 - listar agenda; 11 - atualizar agenda; 12 excluir agenda')
         return int(input())
+
+    @classmethod
+    def ClienteInserir(cls):
+        nome = input('Nome: ')
+        email = input('E-mail: ')
+        fone = input('Fone: ')
+        cliente = Cliente(0, nome, email, fone)
+        NCliente.inserir(cliente)
+
+    @classmethod
+    def ClienteListar(cls):
+        for cliente in NCliente.listar(): print(cliente)
+
+    @classmethod
+    def ClienteAtualizar(cls):
+        UI.ClienteListar()
+        id = int(input('id do cliente a ser atualizado: '))
+        nome = input('Novo nome: ')
+        email = input('Novo e-mail')
+        fone = input('Novo fone: ')
+        cliente = Cliente(id, nome, email, fone)
+        NCliente.atualizar(cliente)
+
+    @classmethod
+    def ClienteExcluir(cls):
+        UI.ClienteListar()
+        id = int(input('id do cliente a ser excluído: '))
+        cliente = Cliente(id, '', '', '')
+        NCliente.excluir(cliente)
 
     @classmethod
     def ServicoInserir(cls):
@@ -332,5 +374,16 @@ class UI:
         servico = Servico(id, '', '', '')
         NServico.excluir(servico)
 
+    @classmethod
+    def AgendaInserir(cls):
+        data = datetime.strftime(datetime.strptime(input('Data no formato dd/mm/aaaa: '), '%d/%m/%Y'), '%d/%m/%Y')
+        confirm = input('Confirmar? s/n: ')
+        UI.ClienteListar()
+        idCliente = int(input('id do cliente: '))
+        UI.ServicoListar()
+        idServico = int(input('id do serviço: '))
+        agenda = Agenda(0, data, confirm, idCliente, idServico)
+        NAgenda.inserir(agenda)
+        
 
 UI.main()
