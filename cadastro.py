@@ -312,10 +312,11 @@ class UI:
             if op == 10: UI.AgendaListar()
             if op == 11: UI.AgendaAtualizar()
             if op == 12: UI.AgendaExcluir()
+            if op == 13: UI.AgendaDia()
 
     @classmethod
     def menu(cls):
-        print('0 - sair; 1 - inserir cliente; 2 - listar cliente; 3 - atualizar cliente; 4 - excluir cliente\n5 - inserir serviço; 6 - listar serviço; 7 - atualizar serviço; 8 - excluir serviço\n9 - inserir agenda; 10 - listar agenda; 11 - atualizar agenda; 12 excluir agenda')
+        print('0 - sair; 1 - inserir cliente; 2 - listar cliente; 3 - atualizar cliente; 4 - excluir cliente\n5 - inserir serviço; 6 - listar serviço; 7 - atualizar serviço; 8 - excluir serviço\n9 - inserir agenda; 10 - listar agenda; 11 - atualizar agenda; 12 excluir agenda; 13 - abrir agenda')
         return int(input())
 
     @classmethod
@@ -386,7 +387,7 @@ class UI:
         idCliente = int(input('id do cliente: '))
         UI.ServicoListar()
         idServico = int(input('id do serviço: '))
-        agenda = Agenda(id, data, confirm, idCliente, idServico)
+        agenda = Agenda(id, data, confirm, idCliente, idServico, '', '', '')
         NAgenda.inserir(agenda)
         
     @classmethod
@@ -405,15 +406,28 @@ class UI:
         idCliente = int(input('Novo id do cliente: '))
         UI.ServicoListar()
         idServico = int(input('Novo id do serviço: '))
-        agenda = Agenda(id, data, confirm, idCliente, idServico)
+        agenda = Agenda(id, data, confirm, idCliente, idServico, '', '', '')
         NAgenda.atualizar(agenda)
 
     @classmethod
     def AgendaExcluir(cls):
         UI.AgendaListar()
         id = int(input('id da agenda a ser excluída: '))
-        agenda = Agenda(id, '', '', '', '')
+        agenda = Agenda(id, '', '', '', '', '', '', '')
         NAgenda.excluir(agenda)
+
+    @classmethod
+    def AgendaDia(cls):
+        data = datetime.strptime(input('Digite a data da agenda: '), '%d/%m/%Y')
+        hora_init = datetime.strptime(input('Digite a hora inicial: '), '%H:%M')
+        hora_final = datetime.strptime(input('Digite a hora final: '), '%H:%M')
+        duracao = timedelta(minutes=int(input('Digite a duração de cada serviço em minutos: ')))
+        while hora_init != hora_final:
+            hora_init += duracao
+            # AJEITAR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            agenda = Agenda(id, data, confirm, idCliente, idServico, '', '', '')
+            NAgenda.inserir(agenda)
+            print(f'{data} {hora_init}')
 
 
 UI.main()
