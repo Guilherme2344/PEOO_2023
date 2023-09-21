@@ -421,13 +421,12 @@ class UI:
         data = datetime.strptime(input('Digite a data da agenda: '), '%d/%m/%Y')
         hora_init = datetime.strptime(input('Digite a hora inicial: '), '%H:%M')
         hora_final = datetime.strptime(input('Digite a hora final: '), '%H:%M')
-        duracao = timedelta(minutes=int(input('Digite a duração de cada serviço em minutos: ')))
-        while hora_init != hora_final:
-            hora_init += duracao
-            # AJEITAR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            agenda = Agenda(id, data, confirm, idCliente, idServico, '', '', '')
+        duracao = datetime.strptime(input('Duração em minutos: '), '%M')
+        while hora_init <= hora_final:
+            data_horario = datetime(data.year, data.month, data.day, hora_init.hour, hora_init.minute)
+            agenda = Agenda(0, data_horario, 0, 0, 0)
             NAgenda.inserir(agenda)
-            print(f'{data} {hora_init}')
+            hora_init += timedelta(minutes=duracao.minute)
 
 
 UI.main()
