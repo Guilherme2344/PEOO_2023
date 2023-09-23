@@ -89,11 +89,11 @@ class NMedicamento:
 
     @classmethod
     def vencidos(cls):
+        NMedicamento.abrir()
+        lista = []
         for medicamento in cls.__medicamentos:
-            hoje = datetime.today()
-            if medicamento.get_vencimento() < hoje:
-                return medicamento
-            return None
+            if medicamento.get_vencimento() < datetime.today(): lista.append(medicamento)
+        return lista
 
 
 class UI:
