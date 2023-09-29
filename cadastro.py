@@ -77,7 +77,7 @@ class NCliente:
         cliente = cls.listar_id(obj.get_id())
         if cliente is not None:
             cls.__clientes.remove(cliente)
-        NCliente.salvar()
+            NCliente.salvar()
 
     @classmethod
     def abrir(cls):
@@ -164,7 +164,7 @@ class NServico:
             servico.set_desc(obj.get_desc())
             servico.set_valor(obj.get_valor())
             servico.set_duracao(obj.get_duracao())
-        NServico.salvar()
+            NServico.salvar()
 
     @classmethod
     def excluir(cls, obj):
@@ -172,7 +172,7 @@ class NServico:
         servico = NServico.listar_id(obj.get_id())
         if servico is not None:
             cls.__servicos.remove(servico)
-        NServico.salvar()
+            NServico.salvar()
 
     @classmethod
     def abrir(cls):
@@ -271,7 +271,7 @@ class NAgenda:
             agenda.set_confirm(obj.get_confirm())
             agenda.set_idCliente(obj.get_idCliente())
             agenda.set_idServico(obj.get_idServico())
-        NAgenda.salvar()
+            NAgenda.salvar()
 
     @classmethod
     def excluir(cls, obj):
@@ -279,7 +279,7 @@ class NAgenda:
         agenda = cls.listar_id(obj.get_id())
         if servico is not None:
             cls.__agendas.remove(agenda)
-        NAgenda.salvar()
+            NAgenda.salvar()
 
     @classmethod
     def abrir(cls):
