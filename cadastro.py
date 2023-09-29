@@ -65,16 +65,18 @@ class NCliente:
     def atualizar(cls, obj):
         NCliente.abrir()
         cliente = cls.listar_id(obj.get_id())
-        cliente.set_nome(obj.get_nome())
-        cliente.set_email(obj.get_email())
-        cliente.set_fone(obj.get_fone())
-        NCliente.salvar()
+        if cliente is not None:
+            cliente.set_nome(obj.get_nome())
+            cliente.set_email(obj.get_email())
+            cliente.set_fone(obj.get_fone())
+            NCliente.salvar()
 
     @classmethod
     def excluir(cls, obj):
         NCliente.abrir()
         cliente = cls.listar_id(obj.get_id())
-        cls.__clientes.remove(cliente)
+        if cliente is not None:
+            cls.__clientes.remove(cliente)
         NCliente.salvar()
 
     @classmethod
@@ -158,16 +160,18 @@ class NServico:
     def atualizar(cls, obj):
         NServico.abrir()
         servico = NServico.listar_id(obj.get_id())
-        servico.set_desc(obj.get_desc())
-        servico.set_valor(obj.get_valor())
-        servico.set_duracao(obj.get_duracao())
+        if servico is not None:
+            servico.set_desc(obj.get_desc())
+            servico.set_valor(obj.get_valor())
+            servico.set_duracao(obj.get_duracao())
         NServico.salvar()
 
     @classmethod
     def excluir(cls, obj):
         NServico.abrir()
         servico = NServico.listar_id(obj.get_id())
-        cls.__servicos.remove(servico)
+        if servico is not None:
+            cls.__servicos.remove(servico)
         NServico.salvar()
 
     @classmethod
@@ -262,17 +266,19 @@ class NAgenda:
     def atualizar(cls, obj):
         NAgenda.abrir()
         agenda = cls.listar_id(obj.get_id())
-        agenda.set_data(obj.get_data())
-        agenda.set_confirm(obj.get_confirm())
-        agenda.set_idCliente(obj.get_idCliente())
-        agenda.set_idServico(obj.get_idServico())
+        if servico is not None:
+            agenda.set_data(obj.get_data())
+            agenda.set_confirm(obj.get_confirm())
+            agenda.set_idCliente(obj.get_idCliente())
+            agenda.set_idServico(obj.get_idServico())
         NAgenda.salvar()
 
     @classmethod
     def excluir(cls, obj):
         NAgenda.abrir()
         agenda = cls.listar_id(obj.get_id())
-        cls.__agendas.remove(agenda)
+        if servico is not None:
+            cls.__agendas.remove(agenda)
         NAgenda.salvar()
 
     @classmethod
