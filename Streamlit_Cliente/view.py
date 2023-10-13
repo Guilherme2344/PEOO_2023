@@ -10,7 +10,7 @@ class View:
         for cliente in NCliente.listar():
             clientes.append([cliente.get_nome(), cliente.get_email(), cliente.get_fone()])
         dados = pd.DataFrame(clientes, columns=['Nome', 'E-mail', 'Fone'])
-        st.dataframe(dados)
+        st.dataframe(dados, hide_index=True)
 
     @classmethod
     def cliente_inserir(cls):
@@ -31,12 +31,12 @@ class View:
             clientes.append(cliente)
         st.header('Atualizar Cliente')
         with st.form('atualizar'):
-            st.selectbox('Qual cliente você quer atualizar?', (clientes), index=None, placeholder='Selecione o cliente')
+            opcao = st.selectbox('Qual cliente você quer atualizar?', (clientes), index=None, placeholder='Selecione o cliente')
             nome = st.text_input('Novo nome')
             email = st.text_input('Novo e-mail')
             fone = st.text_input('Novo fone')
             if st.form_submit_button('Atualizar'):
-                cliente = Cliente(cliente.get_id(), nome, email, fone)
+                cliente = Cliente(opcao.get_id(), nome, email, fone)
                 NCliente.atualizar(cliente)
                 st.success('Cliente atualizado com sucesso!')
 
@@ -47,8 +47,8 @@ class View:
             clientes.append(cliente)
         st.header('Excluir Cliente')
         with st.form('excluir'):
-            st.selectbox('Qual cliente você quer excluir?', (clientes), index=None, placeholder='Selecione o cliente')
+            opcao = st.selectbox('Qual cliente você quer excluir?', (clientes), index=None, placeholder='Selecione o cliente')
             if st.form_submit_button('Excluir'):
-                cliente = Cliente(cliente.get_id(), '', '', '')
+                cliente = Cliente(opcao.get_id(), '', '', '')
                 NCliente.excluir(cliente)
                 st.success('Cliente excluído com sucesso!')
